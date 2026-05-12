@@ -11,6 +11,13 @@ class CompileResult:
     output: str
     binary_path: str | None = None
 
+    def to_dict(self) -> dict:
+        return {
+            "success": self.success,
+            "output": self.output,
+            "binary_path": self.binary_path,
+        }
+
 class Compiler:
     async def compile_source(self, language_config: LanguageConfig, source: str) -> CompileResult:
         if not language_config.compile_command:

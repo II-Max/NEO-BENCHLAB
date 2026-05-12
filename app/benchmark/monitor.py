@@ -2,7 +2,7 @@ import psutil
 import threading
 import time
 from dataclasses import dataclass, field
-from typing import List, Dict
+from typing import List, Dict, Any
 
 @dataclass
 class SystemMonitor:
@@ -28,7 +28,7 @@ class SystemMonitor:
             self.ram_samples.append(psutil.virtual_memory().used / 1024**2)
             time.sleep(self.interval)
 
-    def snapshot(self) -> Dict[str, any]:
+    def snapshot(self) -> Dict[str, Any]:
         return {
             "cpu_avg": sum(self.cpu_samples) / len(self.cpu_samples) if self.cpu_samples else 0.0,
             "cpu_peak": max(self.cpu_samples, default=0.0),

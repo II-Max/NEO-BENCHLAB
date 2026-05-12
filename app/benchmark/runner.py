@@ -5,7 +5,7 @@ from typing import Any, Dict
 from app.benchmark.monitor import SystemMonitor
 from app.benchmark.report import BenchmarkReportGenerator
 from app.benchmark.stress import StressTester
-from app.judge.executor import ExecutionResult
+from app.judge.executor import ExecutionResult, Executor
 from app.judge.compiler import Compiler
 from app.judge.languages import LANGUAGES
 from app.utils.config import AppConfig
@@ -20,6 +20,7 @@ class BenchmarkRunner:
         self.config = config
         self.monitor = SystemMonitor()
         self.compiler = Compiler()
+        self.executor = Executor()
         self.reporter = BenchmarkReportGenerator(config=config)
         self.stress_tester = StressTester(config=config)
         self.start_time = time.perf_counter()
@@ -29,7 +30,7 @@ class BenchmarkRunner:
         language_config = LANGUAGES[language]
 
         compile_result = await self.compiler.compile_source(language_config, source)
-        execution_result = await self.compiler.execute_source(language_config, source)
+        execution_result = await self.executor.execute(language_config, source)
 
         if self.config.enable_stress_test:
             await self.stress_tester.run_stress_test(language_config, source)
