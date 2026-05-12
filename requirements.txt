@@ -1,0 +1,15 @@
+fastapi
+uvicorn[standard]
+psutil
+requests
+httpx
+numpy
+pandas
+plotly
+rich
+jinja2
+aiofiles
+websockets
+python-multipart
+python-dotenv
+py-spy
